@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/errorDescriptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="예기치 못한 에러가 발생하였습니다. \n잠시 후 다시 시도해주세요"
+            android:visibility="gone"
+            tools:ignore="HardcodedText" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contentsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            tools:background="@color/gray"
+            tools:context=".MainActivity">
+
+            <TextView
+                android:id="@+id/measuringStationNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="강남대로" />
+
+            <TextView
+                android:id="@+id/totalGradeLabelTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/measuringStationNameTextView"
+                tools:text="매우 나쁨" />
+
+            <TextView
+                android:id="@+id/totalGradeEmojiTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="95sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/totalGradeLabelTextView"
+                tools:text="😁" />
+
+            <TextView
+                android:id="@+id/fineDustInformationTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/ultraFineDustInformationTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/totalGradeEmojiTextView"
+                tools:text="미세먼지: 40 😁" />
+
+            <TextView
+                android:id="@+id/ultraFineDustInformationTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fineDustInformationTextView"
+                app:layout_constraintTop_toBottomOf="@id/totalGradeEmojiTextView"
+                tools:text="초미세먼지: 10 😁" />
+
+            <View
+                android:id="@+id/upperDivider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fineDustInformationTextView" />
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@id/lowerDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/upperDivider">
+
+                <include
+                    android:id="@+id/so2Item"
+                    layout="@layout/view_measured_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/coItem"
+                    layout="@layout/view_measured_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/o3Item"
+                    layout="@layout/view_measured_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/no2Item"
+                    layout="@layout/view_measured_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+
+            </LinearLayout>
+
+
+            <View
+                android:id="@+id/lowerDivider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="12dp"
+                android:alpha="0.5"
+                android:background="@color/white"
+                app:layout_constraintBottom_toTopOf="@id/measuringStationAddressTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/measuringStationAddressTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginBottom="20dp"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                app:autoSizeMaxTextSize="12dp"
+                app:autoSizeMinTextSize="8dp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toTopOf="@id/additionalInformationTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="측정소 위치: 서울시 강남대로..." />
+
+
+            <TextView
+                android:id="@+id/additionalInformationTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:alpha="0.3"
+                android:background="@color/black"
+                android:drawablePadding="6dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="6dp"
+                android:text="@string/자료출처"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:drawableStartCompat="@drawable/ic_outline_info_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="SmallSp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
