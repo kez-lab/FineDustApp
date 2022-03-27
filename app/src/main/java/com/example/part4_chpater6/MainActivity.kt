@@ -101,19 +101,16 @@ class MainActivity : AppCompatActivity() {
             scope.launch {
                 binding.errorDescriptionTextView.visibility = GONE
                 try {
-                    withContext(Dispatchers.IO) {
-                        val monitoringStation =
-                            Repository.getNearbyMonitoringStation(
-                                location.latitude,
-                                location.longitude
-                            )
-                        val measuredValue =
-                            Repository.getLatestAirQualityData(monitoringStation!!.stationName.orEmpty())
+                    val monitoringStation =
+                        Repository.getNearbyMonitoringStation(
+                            location.latitude,
+                            location.longitude
+                        )
+                    val measuredValue =
+                        Repository.getLatestAirQualityData(monitoringStation!!.stationName.orEmpty())
+                    displayAurQualityData(monitoringStation, measuredValue!!)
 
-                        withContext(Dispatchers.Main) {
-                            displayAurQualityData(monitoringStation, measuredValue!!)
-                        }
-                    }
+
                 } catch (exception: Exception) {
                     binding.errorDescriptionTextView.visibility = VISIBLE
                     binding.contentsLayout.alpha = 0f
