@@ -1,7 +1,7 @@
 package com.kej.finedust.data
 
 import android.util.Log
-import com.example.part4_chpater6.BuildConfig
+import com.kej.finedust.BuildConfig
 import com.kej.finedust.data.models.airquality.MeasuredValue
 import com.kej.finedust.data.models.monitoringstation.MonitoringStation
 import com.kej.finedust.data.services.AirKoreaApiService

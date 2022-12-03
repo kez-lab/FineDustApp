@@ -1,6 +1,6 @@
 package com.kej.finedust.data.services
 
-import com.example.part4_chpater6.BuildConfig
+import com.kej.finedust.BuildConfig
 import com.kej.finedust.data.models.airquality.AirQualityResponse
 import com.kej.finedust.data.models.monitoringstation.MonitoringStationsResponse
 import retrofit2.Response

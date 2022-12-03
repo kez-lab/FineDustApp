@@ -1,6 +1,6 @@
 package com.kej.finedust.data.services
 
-import com.example.part4_chpater6.BuildConfig
+import com.kej.finedust.BuildConfig
 import com.kej.finedust.data.models.tmcoodinates.TmCoordinatesResponse
 import retrofit2.Response
 import retrofit2.http.GET

@@ -1,8 +1,8 @@
 package com.kej.finedust.data.models.airquality
 
 import androidx.annotation.ColorRes
-import com.example.part4_chpater6.R
 import com.google.gson.annotations.SerializedName
+import com.kej.finedust.R
 
 enum class Grade(
     val label: String,
