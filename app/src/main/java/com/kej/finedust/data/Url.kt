@@ -1,4 +1,4 @@
-package com.example.part4_chpater6.data
+package com.kej.finedust.data
 
 object Url {
     const val KAKAO_API_BASE_URL = "https://dapi.kakao.com"

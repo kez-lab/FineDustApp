@@ -1,4 +1,4 @@
-package com.example.part4_chpater6.data.models.monitoringstation
+package com.kej.finedust.data.models.monitoringstation
 
 
 import com.google.gson.annotations.SerializedName

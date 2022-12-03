@@ -1,11 +1,11 @@
-package com.example.part4_chpater6.data
+package com.kej.finedust.data
 
 import android.util.Log
 import com.example.part4_chpater6.BuildConfig
-import com.example.part4_chpater6.data.models.airquality.MeasuredValue
-import com.example.part4_chpater6.data.models.monitoringstation.MonitoringStation
-import com.example.part4_chpater6.data.services.AirKoreaApiService
-import com.example.part4_chpater6.data.services.KakaoLocationApiService
+import com.kej.finedust.data.models.airquality.MeasuredValue
+import com.kej.finedust.data.models.monitoringstation.MonitoringStation
+import com.kej.finedust.data.services.AirKoreaApiService
+import com.kej.finedust.data.services.KakaoLocationApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -14,7 +14,7 @@ import retrofit2.create
 
 object Repository {
 
-    suspend fun getNearbyMonitoringStation(latitude:Double, longitude:Double):MonitoringStation? {
+    suspend fun getNearbyMonitoringStation(latitude:Double, longitude:Double): MonitoringStation? {
         val tmCoordinates = kakaoLocationApiService
             .getTmCoodrinates(longitude, latitude)
             .body()
@@ -43,7 +43,7 @@ object Repository {
 
 
 
-    private val kakaoLocationApiService:KakaoLocationApiService by lazy {
+    private val kakaoLocationApiService: KakaoLocationApiService by lazy {
         Retrofit.Builder()
             .baseUrl(Url.KAKAO_API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -53,7 +53,7 @@ object Repository {
     }
 
 
-    private val airKoreaApiService:AirKoreaApiService by lazy {
+    private val airKoreaApiService: AirKoreaApiService by lazy {
         Retrofit.Builder()
             .baseUrl(Url.AIR_KOREA_API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

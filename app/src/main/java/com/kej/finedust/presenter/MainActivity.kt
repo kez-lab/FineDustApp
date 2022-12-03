@@ -1,24 +1,23 @@
-package com.example.part4_chpater6
+package com.kej.finedust.presenter
 
 import android.Manifest
 import android.annotation.SuppressLint
-
 import android.content.pm.PackageManager
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.example.part4_chpater6.data.Repository
-import com.example.part4_chpater6.data.models.airquality.Grade
-import com.example.part4_chpater6.data.models.airquality.MeasuredValue
-import com.example.part4_chpater6.data.models.monitoringstation.MonitoringStation
 import com.example.part4_chpater6.databinding.ActivityMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
+import com.kej.finedust.data.Repository
+import com.kej.finedust.data.models.airquality.Grade
+import com.kej.finedust.data.models.airquality.MeasuredValue
+import com.kej.finedust.data.models.monitoringstation.MonitoringStation
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
@@ -27,23 +26,20 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var cancellationTokenSource: CancellationTokenSource? = null
-    private val scope = MainScope()
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
         bindViews()
         initVariables()
         requestLocationPermission()
-
-
+        observeData()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         cancellationTokenSource?.cancel()
-        scope.cancel()
     }
 
 
@@ -89,6 +85,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun observeData() {
+        viewModel.mainLiveData.observe(this) {
+            when (it) {
+                is MainState.SuccessMonitoringStation -> {
+                    viewModel.getMeasuredValue(it.monitoringStation)
+                }
+
+                is MainState.SuccessMeasureVale -> {
+                    displayAurQualityData(it.monitoringStation, it.MeasuredValue)
+                    binding.progressBar.visibility = GONE
+                    binding.refresh.isRefreshing = false
+                }
+                else -> {
+                    binding.errorDescriptionTextView.visibility = VISIBLE
+                    binding.contentsLayout.alpha = 0f
+                }
+            }
+        }
+    }
+
 
     @SuppressLint("MissingPermission")
     private fun fetchAirQualityData() {
@@ -98,32 +114,8 @@ class MainActivity : AppCompatActivity() {
             LocationRequest.PRIORITY_HIGH_ACCURACY,
             cancellationTokenSource!!.token
         ).addOnSuccessListener { location ->
-            scope.launch {
-                binding.errorDescriptionTextView.visibility = GONE
-                try {
-                    val monitoringStation =
-                        Repository.getNearbyMonitoringStation(
-                            location.latitude,
-                            location.longitude
-                        )
-                    val measuredValue =
-                        Repository.getLatestAirQualityData(monitoringStation!!.stationName.orEmpty())
-                    displayAurQualityData(monitoringStation, measuredValue!!)
-
-
-                } catch (exception: Exception) {
-                    binding.errorDescriptionTextView.visibility = VISIBLE
-                    binding.contentsLayout.alpha = 0f
-
-                } finally {
-                    binding.progressBar.visibility = GONE
-                    binding.refresh.isRefreshing = false
-                }
-
-
-            }
-
-
+            binding.errorDescriptionTextView.visibility = GONE
+            viewModel.getMonitoringStation(location)
         }
     }
 

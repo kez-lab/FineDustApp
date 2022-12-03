@@ -1,4 +1,4 @@
-package com.example.part4_chpater6.data.models.airquality
+package com.kej.finedust.data.models.airquality
 
 import androidx.annotation.ColorRes
 import com.example.part4_chpater6.R
