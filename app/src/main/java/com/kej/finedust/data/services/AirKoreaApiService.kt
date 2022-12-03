@@ -1,8 +1,8 @@
-package com.example.part4_chpater6.data.services
+package com.kej.finedust.data.services
 
 import com.example.part4_chpater6.BuildConfig
-import com.example.part4_chpater6.data.models.airquality.AirQualityResponse
-import com.example.part4_chpater6.data.models.monitoringstation.MonitoringStationsResponse
+import com.kej.finedust.data.models.airquality.AirQualityResponse
+import com.kej.finedust.data.models.monitoringstation.MonitoringStationsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

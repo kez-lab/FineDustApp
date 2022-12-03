@@ -1,11 +1,11 @@
-package com.example.part4_chpater6.data.models.airquality
+package com.kej.finedust.data.models.monitoringstation
 
 
 import com.google.gson.annotations.SerializedName
 
 data class Body(
     @SerializedName("items")
-    val measuredValues: List<MeasuredValue>?,
+    val monitoringStations: List<MonitoringStation>?,
     @SerializedName("numOfRows")
     val numOfRows: Int?,
     @SerializedName("pageNo")

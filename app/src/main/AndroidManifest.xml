@@ -15,7 +15,7 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Part4chpater6">
         <activity
-            android:name=".MainActivity"
+            android:name="com.kej.finedust.presenter.MainActivity"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>

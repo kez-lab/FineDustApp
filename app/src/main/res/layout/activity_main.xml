@@ -33,7 +33,7 @@
             android:layout_height="match_parent"
             android:alpha="0"
             tools:background="@color/gray"
-            tools:context=".MainActivity">
+            tools:context="com.kej.finedust.presenter.MainActivity">
 
             <TextView
                 android:id="@+id/measuringStationNameTextView"
