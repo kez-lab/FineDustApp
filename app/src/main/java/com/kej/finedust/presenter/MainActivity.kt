@@ -9,7 +9,6 @@ import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.example.part4_chpater6.databinding.ActivityMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -18,6 +17,7 @@ import com.kej.finedust.data.Repository
 import com.kej.finedust.data.models.airquality.Grade
 import com.kej.finedust.data.models.airquality.MeasuredValue
 import com.kej.finedust.data.models.monitoringstation.MonitoringStation
+import com.kej.finedust.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
