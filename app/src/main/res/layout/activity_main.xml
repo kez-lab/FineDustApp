@@ -22,6 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:text="예기치 못한 에러가 발생하였습니다. \n잠시 후 다시 시도해주세요"
             android:visibility="gone"
             tools:ignore="HardcodedText" />
