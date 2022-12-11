@@ -1,4 +1,4 @@
-package com.kej.finedust.data.models.airquality
+package com.org.kej.finedust.data.models.airquality
 
 
 import com.google.gson.annotations.SerializedName

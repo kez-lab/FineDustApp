@@ -1,7 +1,7 @@
-package com.kej.finedust.data.services
+package com.org.kej.finedust.data.services
 
-import com.kej.finedust.BuildConfig
-import com.kej.finedust.data.models.tmcoodinates.TmCoordinatesResponse
+import com.org.kej.finedust.BuildConfig
+import com.org.kej.finedust.data.models.tmcoodinates.TmCoordinatesResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers

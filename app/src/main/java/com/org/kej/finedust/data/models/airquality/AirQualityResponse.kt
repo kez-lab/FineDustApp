@@ -1,9 +1,9 @@
-package com.kej.finedust.data.models.monitoringstation
+package com.org.kej.finedust.data.models.airquality
 
 
 import com.google.gson.annotations.SerializedName
 
-data class MonitoringStationsResponse(
+data class AirQualityResponse(
     @SerializedName("response")
     val response: Response?
 )

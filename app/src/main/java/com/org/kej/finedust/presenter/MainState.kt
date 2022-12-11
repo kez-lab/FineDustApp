@@ -1,7 +1,7 @@
-package com.kej.finedust.presenter
+package com.org.kej.finedust.presenter
 
-import com.kej.finedust.data.models.airquality.MeasuredValue
-import com.kej.finedust.data.models.monitoringstation.MonitoringStation
+import com.org.kej.finedust.data.models.airquality.MeasuredValue
+import com.org.kej.finedust.data.models.monitoringstation.MonitoringStation
 
 sealed class MainState {
 

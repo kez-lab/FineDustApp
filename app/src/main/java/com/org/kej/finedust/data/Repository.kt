@@ -1,11 +1,11 @@
-package com.kej.finedust.data
+package com.org.kej.finedust.data
 
 import android.util.Log
-import com.kej.finedust.BuildConfig
-import com.kej.finedust.data.models.airquality.MeasuredValue
-import com.kej.finedust.data.models.monitoringstation.MonitoringStation
-import com.kej.finedust.data.services.AirKoreaApiService
-import com.kej.finedust.data.services.KakaoLocationApiService
+import com.org.kej.finedust.BuildConfig
+import com.org.kej.finedust.data.models.airquality.MeasuredValue
+import com.org.kej.finedust.data.models.monitoringstation.MonitoringStation
+import com.org.kej.finedust.data.services.AirKoreaApiService
+import com.org.kej.finedust.data.services.KakaoLocationApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
