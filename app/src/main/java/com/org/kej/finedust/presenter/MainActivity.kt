@@ -1,4 +1,4 @@
-package com.kej.finedust.presenter
+package com.org.kej.finedust.presenter
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -13,11 +13,10 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
-import com.kej.finedust.R
-import com.kej.finedust.data.models.airquality.Grade
-import com.kej.finedust.data.models.airquality.MeasuredValue
-import com.kej.finedust.data.models.monitoringstation.MonitoringStation
-import com.kej.finedust.databinding.ActivityMainBinding
+import com.org.kej.finedust.data.models.airquality.Grade
+import com.org.kej.finedust.data.models.airquality.MeasuredValue
+import com.org.kej.finedust.data.models.monitoringstation.MonitoringStation
+import com.org.kej.finedust.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
 import java.lang.Exception
 

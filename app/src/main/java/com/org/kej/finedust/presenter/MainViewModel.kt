@@ -1,12 +1,12 @@
-package com.kej.finedust.presenter
+package com.org.kej.finedust.presenter
 
 import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kej.finedust.data.Repository
-import com.kej.finedust.data.models.monitoringstation.MonitoringStation
+import com.org.kej.finedust.data.Repository
+import com.org.kej.finedust.data.models.monitoringstation.MonitoringStation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
