@@ -13,12 +13,13 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
-import com.kej.finedust.data.Repository
+import com.kej.finedust.R
 import com.kej.finedust.data.models.airquality.Grade
 import com.kej.finedust.data.models.airquality.MeasuredValue
 import com.kej.finedust.data.models.monitoringstation.MonitoringStation
 import com.kej.finedust.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
@@ -86,23 +87,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeData() {
-        viewModel.mainLiveData.observe(this) {
-            when (it) {
-                is MainState.SuccessMonitoringStation -> {
-                    viewModel.getMeasuredValue(it.monitoringStation)
-                }
+        try {
+            viewModel.mainLiveData.observe(this) {
+                when (it) {
+                    is MainState.SuccessMonitoringStation -> {
+                        viewModel.getMeasuredValue(it.monitoringStation)
+                    }
 
-                is MainState.SuccessMeasureVale -> {
-                    displayAurQualityData(it.monitoringStation, it.MeasuredValue)
-                    binding.progressBar.visibility = GONE
-                    binding.refresh.isRefreshing = false
-                }
-                else -> {
-                    binding.errorDescriptionTextView.visibility = VISIBLE
-                    binding.contentsLayout.alpha = 0f
+                    is MainState.SuccessMeasureVale -> {
+                        displayAurQualityData(it.monitoringStation, it.MeasuredValue)
+                        binding.progressBar.visibility = GONE
+                        binding.refresh.isRefreshing = false
+                    }
+                    else -> {
+                        binding.errorDescriptionTextView.visibility = VISIBLE
+                        binding.contentsLayout.alpha = 0f
+                    }
                 }
             }
+        } catch (e:Exception) {
+            fetchAirQualityData()
         }
+
     }
 
 
@@ -115,7 +121,11 @@ class MainActivity : AppCompatActivity() {
             cancellationTokenSource!!.token
         ).addOnSuccessListener { location ->
             binding.errorDescriptionTextView.visibility = GONE
-            viewModel.getMonitoringStation(location)
+            try {
+                viewModel.getMonitoringStation(location)
+            } catch (e:Exception){
+                fetchAirQualityData()
+            }
         }
     }
 
