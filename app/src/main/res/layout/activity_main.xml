@@ -177,31 +177,11 @@
                 app:autoSizeMaxTextSize="12dp"
                 app:autoSizeMinTextSize="8dp"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toTopOf="@id/additionalInformationTextView"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="측정소 위치: 서울시 강남대로..." />
 
-
-            <TextView
-                android:id="@+id/additionalInformationTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:alpha="0.3"
-                android:background="@color/black"
-                android:drawablePadding="6dp"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="6dp"
-                android:text="@string/자료출처"
-                android:textColor="@color/white"
-                android:textSize="10sp"
-                app:drawableStartCompat="@drawable/ic_outline_info_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="SmallSp" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </FrameLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

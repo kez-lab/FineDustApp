@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.org.kej.finedust">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,17 +12,23 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/fine_dust_app"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.Part4chpater6">
+        android:theme="@style/Theme.Part4chpater6"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name="com.org.kej.finedust.presenter.MainActivity"
-            android:screenOrientation="portrait"
-            android:exported="true">
+            android:name=".presenter.splash.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.org.kej.finedust.presenter.main.MainActivity"
+            android:exported="false"
+            android:screenOrientation="fullSensor">
+
         </activity>
     </application>
 

@@ -3,17 +3,16 @@ package com.org.kej.finedust.presenter
 import com.org.kej.finedust.data.models.airquality.MeasuredValue
 import com.org.kej.finedust.data.models.monitoringstation.MonitoringStation
 
-sealed class MainState {
+sealed class DustState {
 
-    object ERROR: MainState()
+    object ERROR: DustState()
 
     data class SuccessMonitoringStation(
         val monitoringStation: MonitoringStation
-    ) : MainState()
+    ) : DustState()
 
     data class SuccessMeasureVale(
-        val monitoringStation: MonitoringStation,
         val MeasuredValue: MeasuredValue
-    ) : MainState()
+    ) : DustState()
 
 }
