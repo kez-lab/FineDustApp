@@ -6,15 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.org.kej.finedust.data.Repository
-import com.org.kej.finedust.data.models.monitoringstation.MonitoringStation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainViewModel : ViewModel() {
+class DustViewModel: ViewModel() {
 
-    private var _mainLiveData = MutableLiveData<MainState>()
-    val mainLiveData: LiveData<MainState> = _mainLiveData
+    private var _dustLiveData = MutableLiveData<DustState>()
+    val dustLiveData: LiveData<DustState> = _dustLiveData
 
     fun getMonitoringStation(location: Location) {
         viewModelScope.launch {
@@ -24,24 +23,26 @@ class MainViewModel : ViewModel() {
                     location.longitude
                 )
             }
-            _mainLiveData.postValue(
+            _dustLiveData.postValue(
                 monitoringStation?.let {
-                    MainState.SuccessMonitoringStation(it)
-                } ?: MainState.ERROR
+                    DustState.SuccessMonitoringStation(it)
+                } ?: DustState.ERROR
             )
         }
     }
 
-    fun getMeasuredValue(monitoringStation: MonitoringStation) {
+    fun getMeasuredValue(stationName: String) {
+        if (stationName.isEmpty()) {
+            _dustLiveData.postValue(DustState.ERROR)
+            return
+        }
         viewModelScope.launch {
             val measuredValue = withContext(Dispatchers.IO) {
-                Repository.getLatestAirQualityData(monitoringStation.stationName.orEmpty())
+                Repository.getLatestAirQualityData(stationName)
             }
-            _mainLiveData.postValue(
-                measuredValue?.let {
-                    MainState.SuccessMeasureVale(monitoringStation, it)
-                } ?: MainState.ERROR
-            )
+            measuredValue?.let {
+                _dustLiveData.postValue(DustState.SuccessMeasureVale(it))
+            }
         }
 
     }
