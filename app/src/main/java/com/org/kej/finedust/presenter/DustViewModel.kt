@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class DustViewModel: ViewModel() {
+class DustViewModel : ViewModel() {
 
     private var _dustLiveData = MutableLiveData<DustState>()
     val dustLiveData: LiveData<DustState> = _dustLiveData
@@ -19,15 +19,12 @@ class DustViewModel: ViewModel() {
         viewModelScope.launch {
             val monitoringStation = withContext(Dispatchers.IO) {
                 Repository.getNearbyMonitoringStation(
-                    location.latitude,
-                    location.longitude
+                    location.latitude, location.longitude
                 )
             }
-            _dustLiveData.postValue(
-                monitoringStation?.let {
-                    DustState.SuccessMonitoringStation(it)
-                } ?: DustState.ERROR
-            )
+            _dustLiveData.postValue(monitoringStation?.let {
+                DustState.SuccessMonitoringStation(it)
+            } ?: DustState.ERROR)
         }
     }
 
@@ -40,9 +37,9 @@ class DustViewModel: ViewModel() {
             val measuredValue = withContext(Dispatchers.IO) {
                 Repository.getLatestAirQualityData(stationName)
             }
-            measuredValue?.let {
-                _dustLiveData.postValue(DustState.SuccessMeasureVale(it))
-            }
+            _dustLiveData.postValue(measuredValue?.let {
+                DustState.SuccessMeasureVale(it)
+            } ?: DustState.ERROR)
         }
 
     }
