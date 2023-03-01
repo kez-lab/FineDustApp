@@ -1,4 +1,4 @@
-package com.org.kej.finedust
+package com.org.kej.finedust.Util
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -17,7 +17,7 @@ object DustUtil {
             try {
                 dustViewModel.getMonitoringStation(location)
             } catch (e: Exception) {
-                //TODO ERROR POPUP
+                DialogUtil.showErrorDialog(context)
             }
         }
     }

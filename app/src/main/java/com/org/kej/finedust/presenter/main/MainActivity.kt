@@ -9,7 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
-import com.org.kej.finedust.DustUtil
+import com.org.kej.finedust.Util.DialogUtil
+import com.org.kej.finedust.Util.DustUtil
 import com.org.kej.finedust.data.models.airquality.Grade
 import com.org.kej.finedust.data.models.airquality.MeasuredValue
 import com.org.kej.finedust.databinding.ActivityMainBinding
@@ -80,12 +81,12 @@ class MainActivity : AppCompatActivity() {
                     else -> {
                         binding.errorDescriptionTextView.visibility = VISIBLE
                         binding.contentsLayout.alpha = 0f
-                        //TODO ERROR POPUP
+                        DialogUtil.showErrorDialog(this)
                     }
                 }
             }
         } catch (e: Exception) {
-            //TODO ERROR 팝업
+            DialogUtil.showErrorDialog(this)
         }
 
     }

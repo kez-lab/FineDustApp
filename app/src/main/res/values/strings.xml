@@ -2,4 +2,6 @@
     <string name="app_name">미세먼지 측정어플</string>
     <string name="자료출처">자료 출처: 환경부/한국환경공단\n주의 사항: 해당 기관이 제공하는 자료는 “인증을 받지 않은 실시간자료”이므로 자료 오류 및 표출방식에 따라 값이 다를 수 있음</string>
     <string name="app_name_splash">미세먼지 측정어플</string>
+    <string name="error_title">에러가 발생하였습니다.</string>
+    <string name="error">ERROR</string>
 </resources>
