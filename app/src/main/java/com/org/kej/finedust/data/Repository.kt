@@ -14,7 +14,6 @@ import retrofit2.create
 import java.util.concurrent.TimeUnit
 
 object Repository {
-
     suspend fun getNearbyMonitoringStation(latitude:Double, longitude:Double): MonitoringStation? {
         val tmCoordinates = kakaoLocationApiService
             .getTmCoodrinates(longitude, latitude)
