@@ -6,11 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.org.kej.finedust.data.Repository
+import com.org.kej.finedust.domain.RepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class DustViewModel : ViewModel() {
+    private val repository: Repository = RepositoryImpl()
 
     private var _dustLiveData = MutableLiveData<DustState>()
     val dustLiveData: LiveData<DustState> = _dustLiveData
@@ -18,7 +20,7 @@ class DustViewModel : ViewModel() {
     fun getMonitoringStation(location: Location) {
         viewModelScope.launch {
             val monitoringStation = withContext(Dispatchers.IO) {
-                Repository.getNearbyMonitoringStation(
+                repository.getNearbyMonitoringStation(
                     location.latitude, location.longitude
                 )
             }
@@ -35,7 +37,7 @@ class DustViewModel : ViewModel() {
         }
         viewModelScope.launch {
             val measuredValue = withContext(Dispatchers.IO) {
-                Repository.getLatestAirQualityData(stationName)
+                repository.getLatestAirQualityData(stationName)
             }
             _dustLiveData.postValue(measuredValue?.let {
                 DustState.SuccessMeasureVale(it)
