@@ -17,8 +17,10 @@ import com.org.kej.finedust.databinding.ActivityMainBinding
 import com.org.kej.finedust.presenter.DustState
 import com.org.kej.finedust.presenter.DustViewModel
 import com.org.kej.finedust.presenter.splash.SplashActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     companion object {

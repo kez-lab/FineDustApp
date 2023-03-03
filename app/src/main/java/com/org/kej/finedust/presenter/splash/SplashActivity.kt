@@ -17,8 +17,10 @@ import com.org.kej.finedust.Util.DialogUtil
 import com.org.kej.finedust.presenter.DustState
 import com.org.kej.finedust.presenter.DustViewModel
 import com.org.kej.finedust.presenter.main.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
 @SuppressLint("CustomSplashScreen")
+@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
     companion object {

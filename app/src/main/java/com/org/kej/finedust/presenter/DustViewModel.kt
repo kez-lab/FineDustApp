@@ -6,13 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.org.kej.finedust.data.Repository
-import com.org.kej.finedust.domain.RepositoryImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class DustViewModel : ViewModel() {
-    private val repository: Repository = RepositoryImpl()
+@HiltViewModel
+class DustViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
     private var _dustLiveData = MutableLiveData<DustState>()
     val dustLiveData: LiveData<DustState> = _dustLiveData
