@@ -21,9 +21,5 @@
 
 
 ## 프로젝트 구조
-
-
-[Android Google Play Link](https://play.google.com/store/apps/details?id=com.org.kej.finedust)
-
 <img width="1499" alt="image" src="https://user-images.githubusercontent.com/93872496/222881295-bf77290f-927a-41de-8b82-1fc71354b5e0.png">
 
