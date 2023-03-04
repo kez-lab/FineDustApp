@@ -2,6 +2,7 @@ package com.org.kej.finedust.presenter
 
 import com.org.kej.finedust.data.models.airquality.MeasuredValue
 import com.org.kej.finedust.data.models.monitoringstation.MonitoringStation
+import com.org.kej.finedust.domain.entity.AirQuality
 
 sealed class DustState {
     object ERROR: DustState()
@@ -11,7 +12,7 @@ sealed class DustState {
     ) : DustState()
 
     data class SuccessMeasureVale(
-        val MeasuredValue: MeasuredValue
+        val airQuality: AirQuality
     ) : DustState()
 
 }

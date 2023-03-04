@@ -1,11 +1,12 @@
 package com.org.kej.finedust.data
 
 import android.util.Log
-import com.org.kej.finedust.data.models.airquality.MeasuredValue
+import com.org.kej.finedust.data.models.airquality.toAirQuality
 import com.org.kej.finedust.data.models.monitoringstation.MonitoringStation
 import com.org.kej.finedust.data.services.AirKoreaApiService
 import com.org.kej.finedust.data.services.KakaoLocationApiService
 import com.org.kej.finedust.domain.Repository
+import com.org.kej.finedust.domain.entity.AirQuality
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
@@ -30,11 +31,8 @@ class RepositoryImpl @Inject constructor(
             ?.monitoringStations
             ?.minByOrNull { it.tm ?: Double.MAX_VALUE }
     }
-    override suspend fun getLatestAirQualityData(stationName: String): MeasuredValue? =
+    override suspend fun getLatestAirQualityData(stationName: String): AirQuality? =
         airKoreaApiService.getRealtimeAirQualities(stationName)
-            .body()
-            ?.response
-            ?.body
-            ?.measuredValues
-            ?.firstOrNull()
+                .body()?.toAirQuality()
+
 }

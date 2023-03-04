@@ -1,0 +1,37 @@
+package com.org.kej.finedust.domain.entity
+
+import com.org.kej.finedust.data.models.airquality.Grade
+
+data class AirQuality(
+    val numOfRows: Int,
+    val pageNo: Int,
+    val totalCount: Int,
+    val resultCode: String,
+    val resultMsg: String,
+    val coFlag: Any,
+    val coGrade: Grade,
+    val coValue: String,
+    val dataTime: String,
+    val khaiGrade: Grade,
+    val khaiValue: String,
+    val mangName: String,
+    val no2Flag: Any,
+    val no2Grade: Grade,
+    val no2Value: String,
+    val o3Flag: Any,
+    val o3Grade: Grade,
+    val o3Value: String,
+    val pm10Flag: Any,
+    val pm10Grade: Grade,
+    val pm10Grade1h: Grade,
+    val pm10Value: String,
+    val pm10Value24: String,
+    val pm25Flag: Any,
+    val pm25Grade: Grade,
+    val pm25Grade1h: Grade,
+    val pm25Value: String,
+    val pm25Value24: String,
+    val so2Flag: Any,
+    val so2Grade: Grade,
+    val so2Value: String,
+)

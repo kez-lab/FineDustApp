@@ -9,14 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
-import com.org.kej.finedust.util.DialogUtil
-import com.org.kej.finedust.util.DustUtil
-import com.org.kej.finedust.data.models.airquality.Grade
-import com.org.kej.finedust.data.models.airquality.MeasuredValue
 import com.org.kej.finedust.databinding.ActivityMainBinding
+import com.org.kej.finedust.domain.entity.AirQuality
 import com.org.kej.finedust.presenter.DustState
 import com.org.kej.finedust.presenter.DustViewModel
 import com.org.kej.finedust.presenter.splash.SplashActivity
+import com.org.kej.finedust.util.DialogUtil
+import com.org.kej.finedust.util.DustUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 
@@ -76,7 +75,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     is DustState.SuccessMeasureVale -> {
-                        displayAurQualityData(it.MeasuredValue)
+                        displayAurQualityData(it.airQuality)
                         binding.progressBar.visibility = GONE
                         binding.refresh.isRefreshing = false
                     }
@@ -93,40 +92,40 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun displayAurQualityData(measuredValue: MeasuredValue) = with(binding) {
+    private fun displayAurQualityData(airQuality: AirQuality) = with(binding) {
         contentsLayout.animate().alpha(1f).start()
 
         measuringStationNameTextView.text = stationName
         measuringStationAddressTextView.text = addr
-        (measuredValue.khaiGrade ?: Grade.UNKNOWN).let { grade ->
+        airQuality.khaiGrade.let { grade ->
             root.setBackgroundResource(grade.colorResId)
 
             totalGradeLabelTextView.text = grade.label
             totalGradeEmojiTextView.text = grade.emoji
         }
 
-        with(measuredValue) {
-            fineDustInformationTextView.text = "미세먼지: $pm10Value ㎍/㎥ ${(pm10Grade ?: Grade.UNKNOWN).emoji}"
-            ultraFineDustInformationTextView.text = "초미세먼지: $pm25Value ㎍/㎥ ${(pm25Grade ?: Grade.UNKNOWN).emoji}"
+        with(airQuality) {
+            fineDustInformationTextView.text = "미세먼지: $pm10Value ㎍/㎥ ${pm10Grade.emoji}"
+            ultraFineDustInformationTextView.text = "초미세먼지: $pm25Value ㎍/㎥ ${pm25Grade.emoji}"
 
             with(so2Item) {
                 labelTextView.text = "아황산가스"
-                gradleTextView.text = (so2Grade ?: Grade.UNKNOWN).toString()
+                gradleTextView.text = so2Grade.toString()
                 valueTextView.text = "$so2Value ppm"
             }
             with(coItem) {
                 labelTextView.text = "일산화탄소"
-                gradleTextView.text = (coGrade ?: Grade.UNKNOWN).toString()
+                gradleTextView.text = coGrade.toString()
                 valueTextView.text = "$coValue ppm"
             }
             with(o3Item) {
                 labelTextView.text = "오존"
-                gradleTextView.text = (o3Grade ?: Grade.UNKNOWN).toString()
+                gradleTextView.text = o3Grade.toString()
                 valueTextView.text = "$o3Value ppm"
             }
             with(no2Item) {
                 labelTextView.text = "이산화질소"
-                gradleTextView.text = (no2Grade ?: Grade.UNKNOWN).toString()
+                gradleTextView.text = no2Grade.toString()
                 valueTextView.text = "$no2Value ppm"
             }
         }
