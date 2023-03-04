@@ -22,3 +22,9 @@
 
 ## 프로젝트 구조
 <img width="1479" alt="image" src="https://user-images.githubusercontent.com/93872496/222882074-82fa9955-46ce-4c33-90c8-aa953cffdba2.png">
+
+## 📚사용 기술 및 라이브러리
+
+- Clean Architecture, Hilt, LiveData
+- Kakao API TM좌표 변환계, Open API Air Korea
+- Retrofit, enum class, Coroutine, OkHttp3, SwipeRefreshLayout, State Pattern
