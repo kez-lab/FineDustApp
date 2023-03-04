@@ -29,7 +29,6 @@
             android:name="com.org.kej.finedust.presenter.main.MainActivity"
             android:exported="false"
             android:screenOrientation="fullSensor">
-
         </activity>
     </application>
 
