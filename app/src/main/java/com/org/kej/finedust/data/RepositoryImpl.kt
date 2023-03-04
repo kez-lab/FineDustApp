@@ -1,11 +1,11 @@
-package com.org.kej.finedust.domain
+package com.org.kej.finedust.data
 
 import android.util.Log
-import com.org.kej.finedust.data.Repository
 import com.org.kej.finedust.data.models.airquality.MeasuredValue
 import com.org.kej.finedust.data.models.monitoringstation.MonitoringStation
 import com.org.kej.finedust.data.services.AirKoreaApiService
 import com.org.kej.finedust.data.services.KakaoLocationApiService
+import com.org.kej.finedust.domain.Repository
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(

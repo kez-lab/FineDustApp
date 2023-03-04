@@ -1,7 +1,7 @@
 package com.org.kej.finedust.di
 
-import com.org.kej.finedust.data.Repository
-import com.org.kej.finedust.domain.RepositoryImpl
+import com.org.kej.finedust.domain.Repository
+import com.org.kej.finedust.data.RepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
