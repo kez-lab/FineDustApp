@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.dustLiveData.observe(this) {
                 when (it) {
                     is DustState.SuccessMonitoringStation -> {
-                        stationName = it.monitoringStation.stationName ?:""
+                        stationName = it.monitoringStation.stationName ?: ""
                         viewModel.getMeasuredValue(stationName)
                     }
 
@@ -90,45 +90,41 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             DialogUtil.showErrorDialog(this)
         }
-
     }
 
-
     @SuppressLint("SetTextI18n")
-    private fun displayAurQualityData(
-        measuredValue: MeasuredValue
-    ) {
+    private fun displayAurQualityData(measuredValue: MeasuredValue) = with(binding) {
+        contentsLayout.animate().alpha(1f).start()
 
-        binding.contentsLayout.animate().alpha(1f).start()
-
-        binding.measuringStationNameTextView.text = stationName
-        binding.measuringStationAddressTextView.text = addr
+        measuringStationNameTextView.text = stationName
+        measuringStationAddressTextView.text = addr
         (measuredValue.khaiGrade ?: Grade.UNKNOWN).let { grade ->
-            binding.root.setBackgroundResource(grade.colorResId)
-            binding.totalGradeLabelTextView.text = grade.label
-            binding.totalGradeEmojiTextView.text = grade.emoji
+            root.setBackgroundResource(grade.colorResId)
+
+            totalGradeLabelTextView.text = grade.label
+            totalGradeEmojiTextView.text = grade.emoji
         }
 
         with(measuredValue) {
-            binding.fineDustInformationTextView.text = "미세먼지: $pm10Value ㎍/㎥ ${(pm10Grade ?: Grade.UNKNOWN).emoji}"
-            binding.ultraFineDustInformationTextView.text = "초미세먼지: $pm25Value ㎍/㎥ ${(pm25Grade ?: Grade.UNKNOWN).emoji}"
+            fineDustInformationTextView.text = "미세먼지: $pm10Value ㎍/㎥ ${(pm10Grade ?: Grade.UNKNOWN).emoji}"
+            ultraFineDustInformationTextView.text = "초미세먼지: $pm25Value ㎍/㎥ ${(pm25Grade ?: Grade.UNKNOWN).emoji}"
 
-            with(binding.so2Item) {
+            with(so2Item) {
                 labelTextView.text = "아황산가스"
                 gradleTextView.text = (so2Grade ?: Grade.UNKNOWN).toString()
                 valueTextView.text = "$so2Value ppm"
             }
-            with(binding.coItem) {
+            with(coItem) {
                 labelTextView.text = "일산화탄소"
                 gradleTextView.text = (coGrade ?: Grade.UNKNOWN).toString()
                 valueTextView.text = "$coValue ppm"
             }
-            with(binding.o3Item) {
+            with(o3Item) {
                 labelTextView.text = "오존"
                 gradleTextView.text = (o3Grade ?: Grade.UNKNOWN).toString()
                 valueTextView.text = "$o3Value ppm"
             }
-            with(binding.no2Item) {
+            with(no2Item) {
                 labelTextView.text = "이산화질소"
                 gradleTextView.text = (no2Grade ?: Grade.UNKNOWN).toString()
                 valueTextView.text = "$no2Value ppm"
