@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
-import com.org.kej.finedust.Util.DialogUtil
-import com.org.kej.finedust.Util.DustUtil
+import com.org.kej.finedust.util.DialogUtil
+import com.org.kej.finedust.util.DustUtil
 import com.org.kej.finedust.data.models.airquality.Grade
 import com.org.kej.finedust.data.models.airquality.MeasuredValue
 import com.org.kej.finedust.databinding.ActivityMainBinding

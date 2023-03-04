@@ -23,7 +23,7 @@ class RepositoryImpl @Inject constructor(
         val tmY = tmCoordinates?.y
         Log.d("좌표계", "$tmX,$tmY")
 
-        return airKoreaApiService.getNearbyMonitoringStation_air(tmX!!, tmY!!)
+        return airKoreaApiService.getNearbyMonitoringStationAir(tmX!!, tmY!!)
             .body()
             ?.response
             ?.body

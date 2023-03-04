@@ -1,8 +1,8 @@
 package com.org.kej.finedust.di
 
 import com.org.kej.finedust.BuildConfig
-import com.org.kej.finedust.data.Url
-import com.org.kej.finedust.data.Url.KAKAO_API_BASE_URL
+import com.org.kej.finedust.util.Url
+import com.org.kej.finedust.util.Url.KAKAO_API_BASE_URL
 import com.org.kej.finedust.data.services.AirKoreaApiService
 import com.org.kej.finedust.data.services.KakaoLocationApiService
 import dagger.Module

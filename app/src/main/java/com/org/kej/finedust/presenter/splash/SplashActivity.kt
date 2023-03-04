@@ -11,9 +11,9 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
-import com.org.kej.finedust.Util.DustUtil
+import com.org.kej.finedust.util.DustUtil
 import com.org.kej.finedust.R
-import com.org.kej.finedust.Util.DialogUtil
+import com.org.kej.finedust.util.DialogUtil
 import com.org.kej.finedust.presenter.DustState
 import com.org.kej.finedust.presenter.DustViewModel
 import com.org.kej.finedust.presenter.main.MainActivity

@@ -12,7 +12,7 @@ interface AirKoreaApiService {
     @GET("B552584/MsrstnInfoInqireSvc/getNearbyMsrstnList" +
             "?serviceKey=${BuildConfig.AIR_KOREA_SERVICE_KEY}" +
             "&returnType=json")
-    suspend fun getNearbyMonitoringStation_air(
+    suspend fun getNearbyMonitoringStationAir(
         @Query("tmX") tmX: Double,
         @Query("tmY") tmY: Double
     ):Response<MonitoringStationsResponse>
