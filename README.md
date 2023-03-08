@@ -44,11 +44,6 @@
 - enum class를 생성하여 4단계로 내려오는 대기 오염 평균 등급을 상태, 이모티콘, 배경색으로 등급화 하여 타입 변환
 - SwipeRefreshLayout을 활용하여 응답 시간 지연, 에러 상황에 측정 서비스 동기화 기능 구현
 
-## 🔔 부족한 점
-
-- 공공데이터 포털에서 제공하는 Air Korea의 API 통신 서버가 자주 불안정하여 ****ERR_CONNECTION_TIMED_OUT**** 에러가 자주 발생한다.
-- 직접 구현한 서버가 아닌 Open API를 이용했기 때문에 예외처리만 구현
-
 ## ✒ 배운 점
 
 - 클린아키텍쳐 기반의 앱 구조를 설계하고 직접 개발하는 경험이 되었다.
@@ -59,3 +54,9 @@
 → Supervisor job job +  Dispatchers.Main 으로 이루어져있는 구조
 - Main 쓰레드는 UI 작업을 위해, IO 쓰레드는 네트워크, 디스크 I/O 실행에 사용에 최적화 되어있다는 점을 학습(Dispatcher는 코루틴을 어떤 쓰레드에서 동작하는지에 대해서 명시)
 - Retrofit 사용시 Main, IO 쓰레드가 자동으로 Switching된다는 점을 학습
+
+
+## 🔔 부족한 점
+
+- 공공데이터 포털에서 제공하는 Air Korea의 API 통신 서버가 자주 불안정하여 ****ERR_CONNECTION_TIMED_OUT**** 에러가 자주 발생한다.
+- 직접 구현한 서버가 아닌 Open API를 이용했기 때문에 예외처리만 구현
