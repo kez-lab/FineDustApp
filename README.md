@@ -56,7 +56,7 @@
 - Retrofit 사용시 Main, IO 쓰레드가 자동으로 Switching된다는 점을 학습
 
 
-## 🔔 부족한 점
+## 🔔 앞으로의 계획
 
 - 공공데이터 포털에서 제공하는 Air Korea의 API 통신 서버가 자주 불안정하여 ****ERR_CONNECTION_TIMED_OUT**** 에러가 자주 발생한다.
 - 직접 구현한 서버가 아닌 Open API를 이용했기 때문에 예외처리만 구현
