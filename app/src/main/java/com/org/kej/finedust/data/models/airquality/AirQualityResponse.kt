@@ -2,7 +2,7 @@ package com.org.kej.finedust.data.models.airquality
 
 
 import com.google.gson.annotations.SerializedName
-import com.org.kej.finedust.domain.entity.AirQuality
+import com.org.kej.finedust.domain.model.AirQualityModel
 
 data class AirQualityResponse(
     @SerializedName("response")
@@ -34,7 +34,7 @@ data class AirQualityResponse(
     }
 }
 
-fun AirQualityResponse.toAirQuality() = AirQuality(
+fun AirQualityResponse.toAirQuality() = AirQualityModel(
     numOfRows = response?.body?.numOfRows ?: 0,
     pageNo = response?.body?.pageNo ?: 0,
     totalCount = response?.body?.totalCount ?: 0,

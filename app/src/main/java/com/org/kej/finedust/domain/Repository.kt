@@ -1,11 +1,10 @@
 package com.org.kej.finedust.domain
 
-import com.org.kej.finedust.data.models.airquality.MeasuredValue
-import com.org.kej.finedust.data.models.monitoringstation.MonitoringStation
-import com.org.kej.finedust.domain.entity.AirQuality
+import com.org.kej.finedust.domain.model.AirQualityModel
+import com.org.kej.finedust.domain.model.MonitoringStationModel
 
 interface Repository {
-    suspend fun getNearbyMonitoringStation(latitude:Double, longitude:Double): MonitoringStation?
-    suspend fun getLatestAirQualityData(stationName:String): AirQuality?
+    suspend fun getNearbyMonitoringStation(latitude:Double, longitude:Double): MonitoringStationModel?
+    suspend fun getLatestAirQualityData(stationName:String): AirQualityModel?
 
 }

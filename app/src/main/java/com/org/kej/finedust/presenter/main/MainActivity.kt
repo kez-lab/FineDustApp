@@ -10,7 +10,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.org.kej.finedust.databinding.ActivityMainBinding
-import com.org.kej.finedust.domain.entity.AirQuality
+import com.org.kej.finedust.domain.model.AirQualityModel
 import com.org.kej.finedust.presenter.DustState
 import com.org.kej.finedust.presenter.DustViewModel
 import com.org.kej.finedust.presenter.splash.SplashActivity
@@ -70,12 +70,12 @@ class MainActivity : AppCompatActivity() {
             viewModel.dustLiveData.observe(this) {
                 when (it) {
                     is DustState.SuccessMonitoringStation -> {
-                        stationName = it.monitoringStation.stationName ?: ""
+                        stationName = it.monitoringStation.stationName
                         viewModel.getMeasuredValue(stationName)
                     }
 
                     is DustState.SuccessMeasureVale -> {
-                        displayAurQualityData(it.airQuality)
+                        displayAurQualityData(it.airQualityModel)
                         binding.progressBar.visibility = GONE
                         binding.refresh.isRefreshing = false
                     }
@@ -92,19 +92,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun displayAurQualityData(airQuality: AirQuality) = with(binding) {
+    private fun displayAurQualityData(airQualityModel: AirQualityModel) = with(binding) {
         contentsLayout.animate().alpha(1f).start()
 
         measuringStationNameTextView.text = stationName
         measuringStationAddressTextView.text = addr
-        airQuality.khaiGrade.let { grade ->
+        airQualityModel.khaiGrade.let { grade ->
             root.setBackgroundResource(grade.colorResId)
 
             totalGradeLabelTextView.text = grade.label
             totalGradeEmojiTextView.text = grade.emoji
         }
 
-        with(airQuality) {
+        with(airQualityModel) {
             fineDustInformationTextView.text = "미세먼지: $pm10Value ㎍/㎥ ${pm10Grade.emoji}"
             ultraFineDustInformationTextView.text = "초미세먼지: $pm25Value ㎍/㎥ ${pm25Grade.emoji}"
 
