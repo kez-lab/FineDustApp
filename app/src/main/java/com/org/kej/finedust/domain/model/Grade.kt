@@ -1,4 +1,4 @@
-package com.org.kej.finedust.data.models.airquality
+package com.org.kej.finedust.domain.model
 
 import androidx.annotation.ColorRes
 import com.google.gson.annotations.SerializedName
@@ -20,11 +20,23 @@ enum class Grade(
 
     @SerializedName("4")
     AWFUL("매우 나쁨","😡", R.color.red),
+
     UNKNOWN("미측정","🤐", R.color.gray);
 
     override fun toString(): String {
         return "$label $emoji"
     }
 
-
+    companion object {
+        fun fromInt(value: Int?): Grade {
+            return when (value) {
+                1 -> GOOD
+                2 -> NORMAL
+                3 -> BAD
+                4 -> AWFUL
+                null -> UNKNOWN
+                else -> UNKNOWN
+            }
+        }
+    }
 }

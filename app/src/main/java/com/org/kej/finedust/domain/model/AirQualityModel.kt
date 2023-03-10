@@ -1,7 +1,5 @@
 package com.org.kej.finedust.domain.model
 
-import com.org.kej.finedust.data.models.airquality.Grade
-
 data class AirQualityModel(
     val numOfRows: Int,
     val pageNo: Int,
