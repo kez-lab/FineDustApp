@@ -14,8 +14,8 @@ import com.google.android.gms.tasks.CancellationTokenSource
 import com.org.kej.finedust.util.DustUtil
 import com.org.kej.finedust.R
 import com.org.kej.finedust.util.DialogUtil
-import com.org.kej.finedust.presenter.DustState
-import com.org.kej.finedust.presenter.DustViewModel
+import com.org.kej.finedust.presenter.State
+import com.org.kej.finedust.presenter.ViewModel
 import com.org.kej.finedust.presenter.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,7 +32,7 @@ class SplashActivity : AppCompatActivity() {
 
     private var cancellationTokenSource: CancellationTokenSource? = null
 
-    private val viewModel by viewModels<DustViewModel>()
+    private val viewModel by viewModels<ViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,9 +65,9 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun initObserve() {
-        viewModel.dustLiveData.observe(this) {
+        viewModel.stateLiveData.observe(this) {
             when (it) {
-                is DustState.SuccessMonitoringStation -> {
+                is State.SuccessMonitoringStation -> {
                     Intent(this, MainActivity::class.java).run {
                         putExtra(STATION_NAME, it.monitoringStation.stationName)
                         putExtra(ADDR, it.monitoringStation.addr)

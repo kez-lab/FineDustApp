@@ -1,4 +1,4 @@
-package com.org.kej.finedust.domain.model
+package com.org.kej.finedust.domain.model.airquality
 
 data class AirQualityModel(
     val numOfRows: Int,

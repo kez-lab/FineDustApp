@@ -13,10 +13,10 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class DustViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
+class ViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
-    private var _dustLiveData = MutableLiveData<DustState>()
-    val dustLiveData: LiveData<DustState> = _dustLiveData
+    private var _stateLiveData = MutableLiveData<State>()
+    val stateLiveData: LiveData<State> = _stateLiveData
 
     fun getMonitoringStation(location: Location) {
         viewModelScope.launch {
@@ -25,25 +25,36 @@ class DustViewModel @Inject constructor(private val repository: Repository) : Vi
                     location.latitude, location.longitude
                 )
             }
-            _dustLiveData.postValue(monitoringStation?.let {
-                DustState.SuccessMonitoringStation(it)
-            } ?: DustState.ERROR)
+            _stateLiveData.postValue(monitoringStation?.let {
+                State.SuccessMonitoringStation(it)
+            } ?: State.ERROR)
         }
     }
 
     fun getMeasuredValue(stationName: String) {
         if (stationName.isEmpty()) {
-            _dustLiveData.postValue(DustState.ERROR)
+            _stateLiveData.postValue(State.ERROR)
             return
         }
         viewModelScope.launch {
             val measuredValue = withContext(Dispatchers.IO) {
                 repository.getLatestAirQualityData(stationName)
             }
-            _dustLiveData.postValue(measuredValue?.let {
-                DustState.SuccessMeasureVale(it)
-            } ?: DustState.ERROR)
+            _stateLiveData.postValue(measuredValue?.let {
+                State.SuccessMeasureVale(it)
+            } ?: State.ERROR)
         }
+    }
 
+    //SMAPLE DATA
+    fun getVillageForecast() {
+        viewModelScope.launch {
+            val weatherList = withContext(Dispatchers.IO) {
+                repository.getVillageForecast("20230312", "0200", 55, 127)
+            }
+            _stateLiveData.postValue(weatherList?.let {
+                State.SuccessWeatherValue(it)
+            } ?: State.ERROR)
+        }
     }
 }

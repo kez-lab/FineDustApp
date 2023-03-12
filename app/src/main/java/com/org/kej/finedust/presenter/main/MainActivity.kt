@@ -2,6 +2,7 @@ package com.org.kej.finedust.presenter.main
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.activity.viewModels
@@ -10,9 +11,9 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.org.kej.finedust.databinding.ActivityMainBinding
-import com.org.kej.finedust.domain.model.AirQualityModel
-import com.org.kej.finedust.presenter.DustState
-import com.org.kej.finedust.presenter.DustViewModel
+import com.org.kej.finedust.domain.model.airquality.AirQualityModel
+import com.org.kej.finedust.presenter.State
+import com.org.kej.finedust.presenter.ViewModel
 import com.org.kej.finedust.presenter.splash.SplashActivity
 import com.org.kej.finedust.util.DialogUtil
 import com.org.kej.finedust.util.DustUtil
@@ -34,11 +35,12 @@ class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
-    private val viewModel by viewModels<DustViewModel>()
+    private val viewModel by viewModels<ViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        viewModel.getVillageForecast()
         initIntentData()
         observeData()
         initRefreshLayout()
@@ -67,17 +69,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeData() {
         try {
-            viewModel.dustLiveData.observe(this) {
+            viewModel.stateLiveData.observe(this) {
                 when (it) {
-                    is DustState.SuccessMonitoringStation -> {
+                    is State.SuccessMonitoringStation -> {
                         stationName = it.monitoringStation.stationName
                         viewModel.getMeasuredValue(stationName)
                     }
 
-                    is DustState.SuccessMeasureVale -> {
+                    is State.SuccessMeasureVale -> {
                         displayAurQualityData(it.airQualityModel)
                         binding.progressBar.visibility = GONE
                         binding.refresh.isRefreshing = false
+                    }
+                    is State.SuccessWeatherValue -> {
+                        Log.d("WeatherList", "${it.weatherList}")
                     }
                     else -> {
                         binding.errorDescriptionTextView.visibility = VISIBLE

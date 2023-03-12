@@ -1,4 +1,4 @@
-package com.org.kej.finedust.domain.model
+package com.org.kej.finedust.domain.model.monitoringstation
 
 data class MonitoringStationModel(
     val addr: String,

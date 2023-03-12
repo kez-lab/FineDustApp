@@ -72,7 +72,6 @@ dependencies {
 
     //viewModel
     implementation "android.arch.lifecycle:extensions:1.1.1"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
 
     //Hilt
     implementation "com.google.dagger:hilt-android:2.44"

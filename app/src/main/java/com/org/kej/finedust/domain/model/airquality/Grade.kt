@@ -1,4 +1,4 @@
-package com.org.kej.finedust.domain.model
+package com.org.kej.finedust.domain.model.airquality
 
 import androidx.annotation.ColorRes
 import com.google.gson.annotations.SerializedName

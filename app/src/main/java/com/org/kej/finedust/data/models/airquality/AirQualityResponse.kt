@@ -2,8 +2,8 @@ package com.org.kej.finedust.data.models.airquality
 
 
 import com.google.gson.annotations.SerializedName
-import com.org.kej.finedust.domain.model.AirQualityModel
-import com.org.kej.finedust.domain.model.Grade
+import com.org.kej.finedust.domain.model.airquality.AirQualityModel
+import com.org.kej.finedust.domain.model.airquality.Grade
 
 data class AirQualityResponse(
     @SerializedName("response")

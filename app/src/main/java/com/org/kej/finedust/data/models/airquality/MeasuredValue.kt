@@ -2,7 +2,6 @@ package com.org.kej.finedust.data.models.airquality
 
 
 import com.google.gson.annotations.SerializedName
-import com.org.kej.finedust.domain.model.Grade
 
 data class MeasuredValue(
     @SerializedName("coFlag")

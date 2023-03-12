@@ -2,7 +2,7 @@ package com.org.kej.finedust.data.models.monitoringstation
 
 
 import com.google.gson.annotations.SerializedName
-import com.org.kej.finedust.domain.model.MonitoringStationModel
+import com.org.kej.finedust.domain.model.monitoringstation.MonitoringStationModel
 
 data class MonitoringStation(
     @SerializedName("addr")
