@@ -47,10 +47,10 @@ class ViewModel @Inject constructor(private val repository: Repository) : ViewMo
     }
 
     //SMAPLE DATA
-    fun getVillageForecast() {
+    fun getVillageForecast(baseData: String, baseTime: String) {
         viewModelScope.launch {
             val weatherList = withContext(Dispatchers.IO) {
-                repository.getVillageForecast("20230312", "0200", 55, 127)
+                repository.getVillageForecast(baseData, baseTime, 55, 127)
             }
             _stateLiveData.postValue(weatherList?.let {
                 State.SuccessWeatherValue(it)

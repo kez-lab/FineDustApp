@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -19,6 +18,8 @@ import com.org.kej.finedust.util.DialogUtil
 import com.org.kej.finedust.util.DustUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import org.joda.time.LocalDateTime
+import org.joda.time.LocalTime
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        viewModel.getVillageForecast()
+        getWeatherData()
         initIntentData()
         observeData()
         initRefreshLayout()
@@ -85,7 +86,6 @@ class MainActivity : AppCompatActivity() {
                         Log.d("WeatherList", "${it.weatherList}")
                     }
                     else -> {
-                        binding.errorDescriptionTextView.visibility = VISIBLE
                         binding.contentsLayout.alpha = 0f
                         DialogUtil.showErrorDialog(this)
                     }
@@ -135,4 +135,27 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun getWeatherData() {
+        viewModel.getVillageForecast(getBaseData(), getBaseTime())
+    }
+
+    private fun getBaseData(): String =
+        LocalDateTime.now().toString("yyyyMMdd")
+
+
+    private fun getBaseTime(): String {
+        val currentTime = LocalTime.now()
+        return when {
+            currentTime.isBefore(LocalTime.parse("02:10")) -> "2300"
+            currentTime.isBefore(LocalTime.parse("05:10")) -> "0200"
+            currentTime.isBefore(LocalTime.parse("08:10")) -> "0500"
+            currentTime.isBefore(LocalTime.parse("11:10")) -> "0800"
+            currentTime.isBefore(LocalTime.parse("14:10")) -> "1100"
+            currentTime.isBefore(LocalTime.parse("17:10")) -> "1400"
+            currentTime.isBefore(LocalTime.parse("20:10")) -> "1700"
+            else -> "2000"
+        }
+    }
+
 }

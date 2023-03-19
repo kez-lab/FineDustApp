@@ -17,7 +17,7 @@
         android:theme="@style/Theme.Part4chpater6"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".WeatherActivity"
+            android:name=".presenter.weather.WeatherActivity"
             android:exported="false" />
         <activity
             android:name=".presenter.splash.SplashActivity"
@@ -25,14 +25,13 @@
             android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.org.kej.finedust.presenter.main.MainActivity"
             android:exported="false"
-            android:screenOrientation="fullSensor"></activity>
+            android:screenOrientation="fullSensor" />
     </application>
 
 </manifest>

@@ -78,4 +78,7 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:2.44"
     implementation "androidx.activity:activity-ktx:1.6.1"
     implementation "androidx.fragment:fragment-ktx:1.5.5"
+
+    //joda
+    implementation 'net.danlew:android.joda:2.12.1.1'
 }
