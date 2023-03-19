@@ -137,11 +137,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getWeatherData() {
-        viewModel.getVillageForecast(getBaseData(), getBaseTime())
+        val currentDateTime = getBaseDataTime()
+        viewModel.getVillageForecast(currentDateTime.first, currentDateTime.second)
     }
 
-    private fun getBaseData(): String =
-        LocalDateTime.now().toString("yyyyMMdd")
+    private fun getBaseDataTime(): Pair<String, String> {
+        val baseDate = getBaseDate()
+        val baseTime = getBaseTime()
+        return Pair(baseDate, baseTime)
+    }
+
+    private fun getBaseDate() = LocalDateTime.now().apply {
+        if (isBefore(LocalTime.parse("02:10"))) {
+            minusDays(1)
+        }
+    }.toString("yyyyMMdd")
 
 
     private fun getBaseTime(): String {
