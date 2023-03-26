@@ -1,6 +1,5 @@
 package com.org.kej.finedust.presenter.main
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View.GONE
@@ -17,7 +16,6 @@ import com.org.kej.finedust.presenter.splash.SplashActivity
 import com.org.kej.finedust.util.DialogUtil
 import com.org.kej.finedust.util.DustUtil
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
 import org.joda.time.LocalDateTime
 import org.joda.time.LocalTime
 
@@ -96,7 +94,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
     private fun displayAurQualityData(airQualityModel: AirQualityModel) = with(binding) {
         contentsLayout.animate().alpha(1f).start()
 
@@ -142,9 +139,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getBaseDataTime(): Pair<String, String> {
-        val baseDate = getBaseDate()
-        val baseTime = getBaseTime()
-        return Pair(baseDate, baseTime)
+        return Pair(getBaseDate(), getBaseTime())
     }
 
     private fun getBaseDate() = LocalDateTime.now().apply {

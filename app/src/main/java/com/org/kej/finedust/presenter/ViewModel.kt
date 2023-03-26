@@ -6,6 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.org.kej.finedust.domain.Repository
+import com.org.kej.finedust.domain.model.weather.WeatherModel
+import com.org.kej.finedust.domain.weather.Forecast
+import com.org.kej.finedust.domain.weather.WeatherCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -52,9 +55,47 @@ class ViewModel @Inject constructor(private val repository: Repository) : ViewMo
             val weatherList = withContext(Dispatchers.IO) {
                 repository.getVillageForecast(baseData, baseTime, 55, 127)
             }
-            _stateLiveData.postValue(weatherList?.let {
-                State.SuccessWeatherValue(it)
-            } ?: State.ERROR)
+            val weatherMap = mutableMapOf<String, Forecast>()
+            weatherList?.forEach { forecast ->
+                weatherMap[getWeatherKey(forecast)] = Forecast(forecast.baseDate, forecast.baseTime)
+                weatherMap[getWeatherKey(forecast)]?.apply {
+                    when (forecast.category) {
+                        WeatherCategory.POP -> {
+                            precipitation = forecast.fcstValue.toInt()
+                        }
+                        WeatherCategory.PTY -> {
+                            precipitationType = transFormPrecipitationType(forecast)
+                        }
+                        WeatherCategory.SKY -> {
+                            sky = transFormSky(forecast)
+                        }
+                        WeatherCategory.TMP -> {
+                            temperature = forecast.fcstValue.toDouble()
+                        }
+                        else -> {}
+                    }
+                }
+            }
+
         }
     }
+
+    private fun transFormSky(forecast: WeatherModel): String {
+        return when (forecast.fcstValue.toInt()) {
+            1 -> "맑음"
+            3 -> "구름 많음"
+            4 -> "흐림"
+            else -> ""
+        }
+    }
+
+    private fun transFormPrecipitationType(forecast: WeatherModel) = when (forecast.fcstValue.toInt()) {
+        1 -> "비"
+        2 -> "비/눈"
+        3 -> "눈"
+        4 -> "소나기"
+        else -> "없음"
+    }
+
+    private fun getWeatherKey(weather: WeatherModel) = "${weather.baseDate}/${weather.baseTime}"
 }
