@@ -30,7 +30,7 @@ class ViewModel @Inject constructor(private val repository: Repository) : ViewMo
             }
             _stateLiveData.postValue(monitoringStation?.let {
                 State.SuccessMonitoringStation(it)
-            } ?: State.ERROR)
+            } ?: State.ERROR) //TEST
         }
     }
 
