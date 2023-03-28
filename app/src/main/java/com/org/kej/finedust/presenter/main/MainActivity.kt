@@ -21,7 +21,6 @@ import kotlinx.coroutines.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
     companion object {
         const val REQUEST_ACCESS_LOCATION_PERMISSIONS = 100
     }
