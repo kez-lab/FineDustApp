@@ -91,6 +91,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
+    //TODO 하드코딩 변경
     private fun displayAurQualityData(airQualityModel: AirQualityModel) = with(binding) {
         contentsLayout.animate().alpha(1f).start()
 
