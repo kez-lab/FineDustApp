@@ -21,15 +21,23 @@
             android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.org.kej.finedust.presenter.main.MainActivity"
             android:exported="false"
-            android:screenOrientation="fullSensor">
-        </activity>
-    </application>
+            android:screenOrientation="fullSensor" />
 
+        <receiver
+            android:name=".presenter.widget.SimpleAirQualityWidgetProvider"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_simple_info" />
+        </receiver>
+    </application>
 </manifest>
