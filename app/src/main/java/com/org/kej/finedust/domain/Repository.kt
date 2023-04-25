@@ -9,8 +9,8 @@ import retrofit2.http.Query
 
 interface Repository {
     suspend fun getNearbyMonitoringStation(latitude: Double, longitude: Double): MonitoringStationModel?
+
     suspend fun getLatestAirQualityData(stationName: String): AirQualityModel?
 
     suspend fun getVillageForecast(baseDate: String, baseTime: String, nx: Int, ny: Int): List<WeatherModel>?
-
 }

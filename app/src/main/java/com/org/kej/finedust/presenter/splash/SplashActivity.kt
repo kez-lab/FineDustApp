@@ -4,19 +4,18 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.org.kej.finedust.util.DustUtil
 import com.org.kej.finedust.R
-import com.org.kej.finedust.util.DialogUtil
 import com.org.kej.finedust.presenter.State
 import com.org.kej.finedust.presenter.ViewModel
 import com.org.kej.finedust.presenter.main.MainActivity
+import com.org.kej.finedust.util.DialogUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @SuppressLint("CustomSplashScreen")
@@ -24,12 +23,13 @@ import dagger.hilt.android.AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
     companion object {
-        const val STATION_NAME = "stationName"
-        const val ADDR = "addr"
+        const val STATION_NAME = "STATION_NAME"
+        const val ADDR = "ADDR"
+        const val LON = "LON"
+        const val LAT = "LAT"
     }
 
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-
+    private lateinit var currentLocation: Location
     private var cancellationTokenSource: CancellationTokenSource? = null
 
     private val viewModel by viewModels<ViewModel>()
@@ -41,12 +41,6 @@ class SplashActivity : AppCompatActivity() {
         initObserve()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        cancellationTokenSource?.cancel()
-    }
-
-    @SuppressLint("MissingPermission", "SetTextI18n")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -71,6 +65,8 @@ class SplashActivity : AppCompatActivity() {
                     Intent(this, MainActivity::class.java).run {
                         putExtra(STATION_NAME, it.monitoringStation.stationName)
                         putExtra(ADDR, it.monitoringStation.addr)
+                        putExtra(LAT, currentLocation.latitude)
+                        putExtra(LON, currentLocation.longitude)
                     }.let(::startActivity)
                     finish()
                 }
@@ -82,13 +78,14 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun getStationData() {
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         cancellationTokenSource = CancellationTokenSource()
         cancellationTokenSource?.let {
-            DustUtil.fetchAirQualityData(this, viewModel, it, fusedLocationProviderClient)
+            DustUtil.fetchAirQualityData(this, it) {location ->
+                currentLocation = location
+                viewModel.getMonitoringStation(location)
+            }
         }
     }
-
 
     private fun requestLocationPermission() {
         ActivityCompat.requestPermissions(

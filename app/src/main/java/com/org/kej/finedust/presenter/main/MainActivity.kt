@@ -5,9 +5,8 @@ import android.util.Log
 import android.view.View.GONE
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
+import com.org.kej.finedust.data.converter.GeoPointConverter
 import com.org.kej.finedust.databinding.ActivityMainBinding
 import com.org.kej.finedust.domain.model.airquality.AirQualityModel
 import com.org.kej.finedust.presenter.State
@@ -28,8 +27,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var stationName: String
     private lateinit var addr: String
+    private var currentLon: Double? = null
+    private var currentLat: Double? = null
 
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var cancellationTokenSource: CancellationTokenSource? = null
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        getWeatherData()
         initIntentData()
         observeData()
         initRefreshLayout()
@@ -52,10 +51,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRefreshLayout() {
         cancellationTokenSource = CancellationTokenSource()
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         binding.refresh.setOnRefreshListener {
             cancellationTokenSource?.let {
-                DustUtil.fetchAirQualityData(this, viewModel, it, fusedLocationProviderClient)
+                DustUtil.fetchAirQualityData(this, it) { location ->
+                    viewModel.getMonitoringStation(location)
+                }
             }
         }
     }
@@ -63,6 +63,8 @@ class MainActivity : AppCompatActivity() {
     private fun initIntentData() {
         stationName = intent.getStringExtra(SplashActivity.STATION_NAME) ?: ""
         addr = intent.getStringExtra(SplashActivity.ADDR) ?: ""
+        currentLon = intent.getDoubleExtra(SplashActivity.LON, 0.0)
+        currentLat = intent.getDoubleExtra(SplashActivity.LAT, 0.0)
         viewModel.getMeasuredValue(stationName)
     }
 
@@ -79,6 +81,7 @@ class MainActivity : AppCompatActivity() {
                         displayAurQualityData(it.airQualityModel)
                         binding.progressBar.visibility = GONE
                         binding.refresh.isRefreshing = false
+                        getWeatherData()
                     }
                     is State.SuccessWeatherValue -> {
                         Log.d("WeatherList", "${it.weatherList}")
@@ -135,31 +138,39 @@ class MainActivity : AppCompatActivity() {
 
     private fun getWeatherData() {
         val currentDateTime = getBaseDataTime()
-        viewModel.getVillageForecast(currentDateTime.first, currentDateTime.second)
+        val currentPoint = GeoPointConverter().convert(currentLon, currentLat)
+        if (currentPoint != null) {
+            viewModel.getVillageForecast(currentDateTime.first, currentDateTime.second, currentPoint.nx, currentPoint.ny)
+        }
     }
 
     private fun getBaseDataTime(): Pair<String, String> {
         return Pair(getBaseDate(), getBaseTime())
     }
 
-    private fun getBaseDate() = LocalDateTime.now().apply {
-        if (isBefore(LocalTime.parse("02:10"))) {
-            minusDays(1)
+    private fun getBaseDate(): String {
+        val now = LocalDateTime.now()
+        val baseDate = if (now.toLocalTime().isBefore(LocalTime.parse("02:10"))) {
+            now.minusDays(1)
+        } else {
+            now
         }
-    }.toString("yyyyMMdd")
+        return baseDate.toString("yyyyMMdd")
+    }
 
 
     private fun getBaseTime(): String {
-        val currentTime = LocalTime.now()
-        return when {
-            currentTime.isBefore(LocalTime.parse("02:10")) -> "2300"
-            currentTime.isBefore(LocalTime.parse("05:10")) -> "0200"
-            currentTime.isBefore(LocalTime.parse("08:10")) -> "0500"
-            currentTime.isBefore(LocalTime.parse("11:10")) -> "0800"
-            currentTime.isBefore(LocalTime.parse("14:10")) -> "1100"
-            currentTime.isBefore(LocalTime.parse("17:10")) -> "1400"
-            currentTime.isBefore(LocalTime.parse("20:10")) -> "1700"
-            else -> "2000"
+        with(LocalTime.now()) {
+            return when {
+                isBefore(LocalTime.parse("02:10")) -> "2300"
+                isBefore(LocalTime.parse("05:10")) -> "0200"
+                isBefore(LocalTime.parse("08:10")) -> "0500"
+                isBefore(LocalTime.parse("11:10")) -> "0800"
+                isBefore(LocalTime.parse("14:10")) -> "1100"
+                isBefore(LocalTime.parse("17:10")) -> "1400"
+                isBefore(LocalTime.parse("20:10")) -> "1700"
+                else -> "2000"
+            }
         }
     }
 

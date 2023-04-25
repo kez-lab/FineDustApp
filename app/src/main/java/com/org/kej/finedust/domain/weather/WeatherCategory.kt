@@ -1,6 +1,7 @@
 package com.org.kej.finedust.domain.weather
 
 import com.google.gson.annotations.SerializedName
+import com.org.kej.finedust.R
 
 enum class WeatherCategory {
     @SerializedName("POP")
@@ -11,4 +12,5 @@ enum class WeatherCategory {
     SKY, // 하늘 상태
     @SerializedName("TMP")
     TMP, // 1시간 기온
+    UNKNOWN;
 }

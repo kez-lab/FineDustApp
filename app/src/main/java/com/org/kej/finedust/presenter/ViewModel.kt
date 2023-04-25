@@ -50,10 +50,10 @@ class ViewModel @Inject constructor(private val repository: Repository) : ViewMo
     }
 
     //SMAPLE DATA
-    fun getVillageForecast(baseData: String, baseTime: String) {
+    fun getVillageForecast(baseData: String, baseTime: String, nx: Int, ny: Int) {
         viewModelScope.launch {
             val weatherList = withContext(Dispatchers.IO) {
-                repository.getVillageForecast(baseData, baseTime, 55, 127)
+                repository.getVillageForecast(baseData, baseTime, nx, ny)
             }
             val weatherMap = mutableMapOf<String, Forecast>()
             weatherList?.forEach { forecast ->
@@ -75,7 +75,7 @@ class ViewModel @Inject constructor(private val repository: Repository) : ViewMo
                         else -> {}
                     }
                 }
-            }
+            } ?: State.ERROR
 
         }
     }

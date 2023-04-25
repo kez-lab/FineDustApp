@@ -1,6 +1,7 @@
 package com.org.kej.finedust.data.models.weather
 
 import com.org.kej.finedust.domain.model.weather.WeatherModel
+import com.org.kej.finedust.domain.weather.WeatherCategory
 
 data class WeatherResponse(
     val response: Response?
@@ -35,7 +36,7 @@ fun WeatherResponse.toWeatherModelList(): List<WeatherModel> {
             WeatherModel(
                 baseDate = it.baseDate ?: "",
                 baseTime = it.baseTime ?: "",
-                category = it.category ?: "",
+                category = it.category ?: WeatherCategory.UNKNOWN,
                 fcstDate = it.fcstDate ?: "",
                 fcstTime = it.fcstTime ?: "",
                 fcstValue = it.fcstValue ?: "",
