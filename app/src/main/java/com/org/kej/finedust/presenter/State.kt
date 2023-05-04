@@ -2,7 +2,7 @@ package com.org.kej.finedust.presenter
 
 import com.org.kej.finedust.domain.model.airquality.AirQualityModel
 import com.org.kej.finedust.domain.model.monitoringstation.MonitoringStationModel
-import com.org.kej.finedust.domain.model.weather.WeatherModel
+import com.org.kej.finedust.domain.weather.Forecast
 
 sealed class State {
     object ERROR : State()
@@ -16,7 +16,7 @@ sealed class State {
     ) : State()
 
     data class SuccessWeatherValue(
-        val weatherList: List<WeatherModel>
+        val weatherList: List<Forecast>
     ) : State()
 
 }

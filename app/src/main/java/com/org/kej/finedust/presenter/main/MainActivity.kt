@@ -11,6 +11,7 @@ import com.org.kej.finedust.databinding.ActivityMainBinding
 import com.org.kej.finedust.domain.model.airquality.AirQualityModel
 import com.org.kej.finedust.presenter.State
 import com.org.kej.finedust.presenter.ViewModel
+import com.org.kej.finedust.presenter.main.weather.WeatherAdapter
 import com.org.kej.finedust.presenter.splash.SplashActivity
 import com.org.kej.finedust.util.DialogUtil
 import com.org.kej.finedust.util.DustUtil
@@ -34,14 +35,21 @@ class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
+    private val weatherAdapter by lazy { WeatherAdapter() }
+
     private val viewModel by viewModels<ViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        initIntentData()
         observeData()
+        initIntentData()
         initRefreshLayout()
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView() {
+        binding.rvWeather.adapter = weatherAdapter
     }
 
     override fun onDestroy() {
@@ -83,9 +91,12 @@ class MainActivity : AppCompatActivity() {
                         binding.refresh.isRefreshing = false
                         getWeatherData()
                     }
+
                     is State.SuccessWeatherValue -> {
+                        weatherAdapter.submitList(it.weatherList)
                         Log.d("WeatherList", "${it.weatherList}")
                     }
+
                     else -> {
                         binding.contentsLayout.alpha = 0f
                         DialogUtil.showErrorDialog(this)
@@ -104,43 +115,18 @@ class MainActivity : AppCompatActivity() {
         measuringStationAddressTextView.text = addr
         airQualityModel.khaiGrade.let { grade ->
             root.setBackgroundResource(grade.colorResId)
-
             totalGradeLabelTextView.text = grade.label
             totalGradeEmojiTextView.text = grade.emoji
         }
 
-        with(airQualityModel) {
-            fineDustInformationTextView.text = "미세먼지: $pm10Value ㎍/㎥ ${pm10Grade.emoji}"
-            ultraFineDustInformationTextView.text = "초미세먼지: $pm25Value ㎍/㎥ ${pm25Grade.emoji}"
-
-            with(so2Item) {
-                labelTextView.text = "아황산가스"
-                gradleTextView.text = so2Grade.toString()
-                valueTextView.text = "$so2Value ppm"
-            }
-            with(coItem) {
-                labelTextView.text = "일산화탄소"
-                gradleTextView.text = coGrade.toString()
-                valueTextView.text = "$coValue ppm"
-            }
-            with(o3Item) {
-                labelTextView.text = "오존"
-                gradleTextView.text = o3Grade.toString()
-                valueTextView.text = "$o3Value ppm"
-            }
-            with(no2Item) {
-                labelTextView.text = "이산화질소"
-                gradleTextView.text = no2Grade.toString()
-                valueTextView.text = "$no2Value ppm"
-            }
-        }
+        fineDustInformationTextView.text = "미세먼지: ${airQualityModel.pm10Value} ㎍/㎥ ${airQualityModel.pm10Grade.emoji}"
+        ultraFineDustInformationTextView.text = "초미세먼지: ${airQualityModel.pm25Value} ㎍/㎥ ${airQualityModel.pm25Grade.emoji}"
     }
 
     private fun getWeatherData() {
         val currentDateTime = getBaseDataTime()
-        val currentPoint = GeoPointConverter().convert(currentLon, currentLat)
-        if (currentPoint != null) {
-            viewModel.getVillageForecast(currentDateTime.first, currentDateTime.second, currentPoint.nx, currentPoint.ny)
+        GeoPointConverter().convert(currentLon, currentLat)?.run {
+            viewModel.getVillageForecast(currentDateTime.first, currentDateTime.second, nx, ny)
         }
     }
 
@@ -173,5 +159,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 }

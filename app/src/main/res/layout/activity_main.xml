@@ -87,49 +87,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fineDustInformationTextView" />
 
-
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvWeather"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginVertical="10dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@id/lowerDivider"
+            app:layout_constraintBottom_toBottomOf="@id/lowerDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/upperDivider">
-
-            <include
-                android:id="@+id/so2Item"
-                layout="@layout/view_measured_item"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <include
-                android:id="@+id/coItem"
-                layout="@layout/view_measured_item"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <include
-                android:id="@+id/o3Item"
-                layout="@layout/view_measured_item"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <include
-                android:id="@+id/no2Item"
-                layout="@layout/view_measured_item"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-
-        </LinearLayout>
-
+            app:layout_constraintTop_toTopOf="@id/upperDivider"
+            tools:listitem="@layout/item_weather"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            />
 
         <View
             android:id="@+id/lowerDivider"

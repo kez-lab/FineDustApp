@@ -63,20 +63,24 @@ class ViewModel @Inject constructor(private val repository: Repository) : ViewMo
                         WeatherCategory.POP -> {
                             precipitation = forecast.fcstValue.toInt()
                         }
+
                         WeatherCategory.PTY -> {
                             precipitationType = transFormPrecipitationType(forecast)
                         }
+
                         WeatherCategory.SKY -> {
                             sky = transFormSky(forecast)
                         }
+
                         WeatherCategory.TMP -> {
                             temperature = forecast.fcstValue.toDouble()
                         }
+
                         else -> {}
                     }
                 }
             } ?: State.ERROR
-
+            _stateLiveData.value = State.SuccessWeatherValue(weatherMap.values.toMutableList())
         }
     }
 
@@ -97,5 +101,5 @@ class ViewModel @Inject constructor(private val repository: Repository) : ViewMo
         else -> "없음"
     }
 
-    private fun getWeatherKey(weather: WeatherModel) = "${weather.baseDate}/${weather.baseTime}"
+    private fun getWeatherKey(weather: WeatherModel) = "${weather.fcstDate}/${weather.fcstTime}"
 }
