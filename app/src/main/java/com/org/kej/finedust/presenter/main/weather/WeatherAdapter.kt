@@ -32,7 +32,11 @@ class WeatherAdapter : ListAdapter<Forecast, WeatherAdapter.WeatherViewHolder>(d
 
     class WeatherViewHolder(private val binding: ItemWeatherBinding) : ViewHolder(binding.root) {
         fun bind(item: Forecast) {
-            binding.tvTemp.text = item.temperature.toString()
+            binding.run {
+                tvTime.text = item.forecastTime
+                tvTemp.text = item.temperature.toString()
+                tvWeather.text = item.precipitationType
+            }
         }
     }
 }

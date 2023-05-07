@@ -18,6 +18,7 @@ import com.org.kej.finedust.util.DustUtil
 import dagger.hilt.android.AndroidEntryPoint
 import org.joda.time.LocalDateTime
 import org.joda.time.LocalTime
+import kotlin.math.absoluteValue
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -125,8 +126,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun getWeatherData() {
         val currentDateTime = getBaseDataTime()
-        GeoPointConverter().convert(currentLon, currentLat)?.run {
+        GeoPointConverter().convert(currentLon?.absoluteValue, currentLat?.absoluteValue)?.run {
             viewModel.getVillageForecast(currentDateTime.first, currentDateTime.second, nx, ny)
+            Log.d("Location", "nx: $nx, ny: $ny")
         }
     }
 

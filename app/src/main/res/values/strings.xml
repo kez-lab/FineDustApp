@@ -4,4 +4,13 @@
     <string name="app_name_splash">미세먼지 측정어플</string>
     <string name="error_title">에러가 발생하였습니다.</string>
     <string name="error">ERROR</string>
+
+    <string name="weather_sunny">맑음</string>
+    <string name="weather_cloudy">구름 많음</string>
+    <string name="weather_overcast">흐림</string>
+    <string name="weather_rain">비</string>
+    <string name="weather_sleet">비/눈</string>
+    <string name="weather_snow">눈</string>
+    <string name="weather_shower">소나기</string>
+    <string name="weather_none">없음</string>
 </resources>

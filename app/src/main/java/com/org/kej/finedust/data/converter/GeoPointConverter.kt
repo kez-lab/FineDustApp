@@ -26,6 +26,8 @@ class GeoPointConverter {
     data class Point(val nx: Int, val ny: Int)
 
     fun convert(lon: Double?, lat: Double?): Point? {
+        Log.d("lon, lat", "$lon $lat")
+
         if (lon ==null || lat == null) {
             return null
         }

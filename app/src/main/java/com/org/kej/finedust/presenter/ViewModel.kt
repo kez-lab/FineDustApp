@@ -57,7 +57,9 @@ class ViewModel @Inject constructor(private val repository: Repository) : ViewMo
             }
             val weatherMap = mutableMapOf<String, Forecast>()
             weatherList?.forEach { forecast ->
-                weatherMap[getWeatherKey(forecast)] = Forecast(forecast.baseDate, forecast.baseTime)
+                if (weatherMap[getWeatherKey(forecast)] == null) {
+                    weatherMap[getWeatherKey(forecast)] = Forecast(forecast.fcstDate, forecast.fcstTime)
+                }
                 weatherMap[getWeatherKey(forecast)]?.apply {
                     when (forecast.category) {
                         WeatherCategory.POP -> {
