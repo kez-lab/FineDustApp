@@ -9,18 +9,18 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
-import com.org.kej.finedust.Util.DialogUtil
-import com.org.kej.finedust.Util.DustUtil
-import com.org.kej.finedust.data.models.airquality.Grade
-import com.org.kej.finedust.data.models.airquality.MeasuredValue
 import com.org.kej.finedust.databinding.ActivityMainBinding
+import com.org.kej.finedust.domain.model.AirQualityModel
 import com.org.kej.finedust.presenter.DustState
 import com.org.kej.finedust.presenter.DustViewModel
 import com.org.kej.finedust.presenter.splash.SplashActivity
+import com.org.kej.finedust.util.DialogUtil
+import com.org.kej.finedust.util.DustUtil
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
     companion object {
         const val REQUEST_ACCESS_LOCATION_PERMISSIONS = 100
     }
@@ -69,12 +69,12 @@ class MainActivity : AppCompatActivity() {
             viewModel.dustLiveData.observe(this) {
                 when (it) {
                     is DustState.SuccessMonitoringStation -> {
-                        stationName = it.monitoringStation.stationName ?:""
+                        stationName = it.monitoringStation.stationName
                         viewModel.getMeasuredValue(stationName)
                     }
 
                     is DustState.SuccessMeasureVale -> {
-                        displayAurQualityData(it.MeasuredValue)
+                        displayAurQualityData(it.airQualityModel)
                         binding.progressBar.visibility = GONE
                         binding.refresh.isRefreshing = false
                     }
@@ -88,47 +88,44 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             DialogUtil.showErrorDialog(this)
         }
-
     }
 
-
     @SuppressLint("SetTextI18n")
-    private fun displayAurQualityData(
-        measuredValue: MeasuredValue
-    ) {
+    //TODO 하드코딩 변경
+    private fun displayAurQualityData(airQualityModel: AirQualityModel) = with(binding) {
+        contentsLayout.animate().alpha(1f).start()
 
-        binding.contentsLayout.animate().alpha(1f).start()
+        measuringStationNameTextView.text = stationName
+        measuringStationAddressTextView.text = addr
+        airQualityModel.khaiGrade.let { grade ->
+            root.setBackgroundResource(grade.colorResId)
 
-        binding.measuringStationNameTextView.text = stationName
-        binding.measuringStationAddressTextView.text = addr
-        (measuredValue.khaiGrade ?: Grade.UNKNOWN).let { grade ->
-            binding.root.setBackgroundResource(grade.colorResId)
-            binding.totalGradeLabelTextView.text = grade.label
-            binding.totalGradeEmojiTextView.text = grade.emoji
+            totalGradeLabelTextView.text = grade.label
+            totalGradeEmojiTextView.text = grade.emoji
         }
 
-        with(measuredValue) {
-            binding.fineDustInformationTextView.text = "미세먼지: $pm10Value ㎍/㎥ ${(pm10Grade ?: Grade.UNKNOWN).emoji}"
-            binding.ultraFineDustInformationTextView.text = "초미세먼지: $pm25Value ㎍/㎥ ${(pm25Grade ?: Grade.UNKNOWN).emoji}"
+        with(airQualityModel) {
+            fineDustInformationTextView.text = "미세먼지: $pm10Value ㎍/㎥ ${pm10Grade.emoji}"
+            ultraFineDustInformationTextView.text = "초미세먼지: $pm25Value ㎍/㎥ ${pm25Grade.emoji}"
 
-            with(binding.so2Item) {
+            with(so2Item) {
                 labelTextView.text = "아황산가스"
-                gradleTextView.text = (so2Grade ?: Grade.UNKNOWN).toString()
+                gradleTextView.text = so2Grade.toString()
                 valueTextView.text = "$so2Value ppm"
             }
-            with(binding.coItem) {
+            with(coItem) {
                 labelTextView.text = "일산화탄소"
-                gradleTextView.text = (coGrade ?: Grade.UNKNOWN).toString()
+                gradleTextView.text = coGrade.toString()
                 valueTextView.text = "$coValue ppm"
             }
-            with(binding.o3Item) {
+            with(o3Item) {
                 labelTextView.text = "오존"
-                gradleTextView.text = (o3Grade ?: Grade.UNKNOWN).toString()
+                gradleTextView.text = o3Grade.toString()
                 valueTextView.text = "$o3Value ppm"
             }
-            with(binding.no2Item) {
+            with(no2Item) {
                 labelTextView.text = "이산화질소"
-                gradleTextView.text = (no2Grade ?: Grade.UNKNOWN).toString()
+                gradleTextView.text = no2Grade.toString()
                 valueTextView.text = "$no2Value ppm"
             }
         }

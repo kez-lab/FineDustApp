@@ -1,4 +1,4 @@
-package com.org.kej.finedust.data
+package com.org.kej.finedust.util
 
 object Url {
     const val KAKAO_API_BASE_URL = "https://dapi.kakao.com"

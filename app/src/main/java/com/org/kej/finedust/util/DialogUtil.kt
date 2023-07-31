@@ -1,4 +1,4 @@
-package com.org.kej.finedust.Util
+package com.org.kej.finedust.util
 
 import android.app.Activity
 import android.app.AlertDialog

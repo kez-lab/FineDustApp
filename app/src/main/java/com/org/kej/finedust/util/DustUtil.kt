@@ -1,4 +1,4 @@
-package com.org.kej.finedust.Util
+package com.org.kej.finedust.util
 
 import android.annotation.SuppressLint
 import android.content.Context
